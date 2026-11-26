@@ -1,0 +1,162 @@
+========================================================================================
+            WEEK 7 - STATISTICAL BUSINESS ANALYSIS: HYPOTHESIS TEST RESULTS             
+========================================================================================
+Business data : business_data.csv (500 customers)
+Sales data    : data/sales_data.csv (100 orders)
+Significance  : alpha = 0.05 (two-sided)
+
+----------------------------------------------------------------------------------------
+T1: Do churned customers have shorter tenure?
+----------------------------------------------------------------------------------------
+Test        : Welch two-sample t-test
+H0          : Mean Tenure is the same for Churned and Retained customers
+H1          : Mean Tenure differs between Churned and Retained customers
+Statistic   : -34.5349
+p-value     : 8.98e-130
+Effect size : Cohen's d = -1.918
+Decision    : REJECT H0 - significant
+Conclusion  : Reject H0. Mean Tenure is 6.0 for Churned vs 40.2 for Retained (difference
+              -34.2); effect size is large. Mann-Whitney U agrees (p = 2.00e-28).
+
+----------------------------------------------------------------------------------------
+T2: Do churned customers pay higher monthly charges?
+----------------------------------------------------------------------------------------
+Test        : Welch two-sample t-test
+H0          : Mean MonthlyCharges is the same for Churned and Retained customers
+H1          : Mean MonthlyCharges differs between Churned and Retained customers
+Statistic   : 2.6464
+p-value     : 0.0101
+Effect size : Cohen's d = 0.350
+Decision    : REJECT H0 - significant
+Conclusion  : Reject H0. Mean MonthlyCharges is 129.8 for Churned vs 111.7 for Retained
+              (difference +18.1); effect size is small. Mann-Whitney U agrees (p =
+              0.0183).
+
+----------------------------------------------------------------------------------------
+T3: Is churn related to contract type?
+----------------------------------------------------------------------------------------
+Test        : Chi-square test of independence
+H0          : Contract and Churn are independent
+H1          : Contract and Churn are associated
+Statistic   : 27.7153
+p-value     : 9.59e-07
+Effect size : Cramer's V = 0.235
+Decision    : REJECT H0 - significant
+Conclusion  : Reject H0. Contract and Churn are associated (Cramer's V = 0.24, small).
+              Churn rate: Month-to-month 20.6%, One year 4.3%, Two year 6.9%.
+
+----------------------------------------------------------------------------------------
+T4: Is churn related to payment method?
+----------------------------------------------------------------------------------------
+Test        : Chi-square test of independence
+H0          : PaymentMethod and Churn are independent
+H1          : PaymentMethod and Churn are associated
+Statistic   : 3.8695
+p-value     : 0.1445
+Effect size : Cramer's V = 0.088
+Decision    : FAIL TO REJECT H0 - not significant
+Conclusion  : Fail to reject H0. PaymentMethod and Churn are not shown to be associated
+              (Cramer's V = 0.09, negligible). Churn rate: Bank Transfer 6.9%, Credit
+              Card 13.5%, Electronic Check 11.0%.
+
+----------------------------------------------------------------------------------------
+T5: Do monthly charges differ by contract type?
+----------------------------------------------------------------------------------------
+Test        : One-way ANOVA
+H0          : Mean MonthlyCharges is equal across all Contract groups
+H1          : At least one Contract group has a different mean MonthlyCharges
+Statistic   : 0.0313
+p-value     : 0.9692
+Effect size : eta squared = 0.000
+Decision    : FAIL TO REJECT H0 - not significant
+Conclusion  : Fail to reject H0. Group means: Month-to-month 112.8, One year 114.0, Two
+              year 114.1. eta^2 = 0.000 (negligible). Kruskal-Wallis agrees (p =
+              0.9570).
+
+----------------------------------------------------------------------------------------
+T6: Does order value differ by product?
+----------------------------------------------------------------------------------------
+Test        : One-way ANOVA
+H0          : Mean Total_Sales is equal across all Product groups
+H1          : At least one Product group has a different mean Total_Sales
+Statistic   : 2.0508
+p-value     : 0.0934
+Effect size : eta squared = 0.079
+Decision    : FAIL TO REJECT H0 - not significant
+Conclusion  : Fail to reject H0. Group means: Headphones 92,268.9, Laptop 162,050.4,
+              Monitor 89,871.4, Phone 142,969.7, Tablet 110,936.2. eta^2 = 0.079
+              (medium). Kruskal-Wallis agrees (p = 0.1082).
+
+----------------------------------------------------------------------------------------
+MULTIPLE TESTING
+----------------------------------------------------------------------------------------
+Bonferroni threshold for 6 tests: 0.0083
+Still significant: T1, T3
+
+----------------------------------------------------------------------------------------
+NORMALITY TESTS (Shapiro-Wilk / D'Agostino-Pearson)
+----------------------------------------------------------------------------------------
+Tenure          W = 0.9496 (p = 5.10e-12)   K2 = 356.2 (p = 4.48e-78)   normal: no
+MonthlyCharges  W = 0.9520 (p = 1.15e-11)   K2 = 348.8 (p = 1.81e-76)   normal: no
+TotalCharges    W = 0.9514 (p = 9.38e-12)   K2 = 377.7 (p = 9.56e-83)   normal: no
+Total_Sales     W = 0.8989 (p = 1.26e-06)   K2 = 11.2 (p = 0.0036)   normal: no
+
+----------------------------------------------------------------------------------------
+CORRELATIONS (Pearson, significant at 5% marked *)
+----------------------------------------------------------------------------------------
+         Tenure vs MonthlyCharges  r = -0.060  p = 0.1829  negligible
+         Tenure vs TotalCharges    r = -0.006  p = 0.8992  negligible
+         Tenure vs Churn           r = -0.509  p = 2.43e-34  moderate *
+ MonthlyCharges vs TotalCharges    r = -0.042  p = 0.3454  negligible
+ MonthlyCharges vs Churn           r = +0.107  p = 0.0163  negligible *
+   TotalCharges vs Churn           r = +0.004  p = 0.9245  negligible
+       Quantity vs Price           r = +0.008  p = 0.9369  negligible
+       Quantity vs Total_Sales     r = +0.688  p = 2.58e-15  moderate *
+          Price vs Total_Sales     r = +0.646  p = 3.88e-13  moderate *
+
+----------------------------------------------------------------------------------------
+CORRELATIONS (Spearman rank check)
+----------------------------------------------------------------------------------------
+         Tenure vs MonthlyCharges  rho = -0.062  p = 0.1663
+         Tenure vs TotalCharges    rho = -0.007  p = 0.8846
+         Tenure vs Churn           rho = -0.495  p = 2.83e-32 *
+ MonthlyCharges vs TotalCharges    rho = -0.040  p = 0.3700
+ MonthlyCharges vs Churn           rho = +0.106  p = 0.0181 *
+   TotalCharges vs Churn           rho = +0.005  p = 0.9180
+       Quantity vs Price           rho = +0.011  p = 0.9145
+       Quantity vs Total_Sales     rho = +0.691  p = 1.67e-15 *
+          Price vs Total_Sales     rho = +0.680  p = 7.44e-15 *
+
+----------------------------------------------------------------------------------------
+95% CONFIDENCE INTERVALS
+----------------------------------------------------------------------------------------
+Mean monthly charges                   113.64  [109.08, 118.19]  MOE +/-4.55  (t)
+Mean tenure (months)                    36.53  [34.72, 38.35]  MOE +/-1.82  (t)
+Churn rate                              10.60%  [8.20%, 13.61%]  MOE +/-2.70%  (Wilson)
+Mean order value (t)               123,650.48  [103,776.35, 143,524.61]  MOE +/-19,874.13  (t)
+Mean order value (bootstrap)       123,650.48  [104,514.84, 143,763.06]  MOE +/-19,624.11  (bootstrap (10,000 resamples))
+Median order value (bootstrap)      97,955.50  [73,941.49, 135,980.00]  MOE +/-31,019.26  (bootstrap (10,000 resamples))
+
+----------------------------------------------------------------------------------------
+REGRESSION MODELS (OLS)
+----------------------------------------------------------------------------------------
+Total_Sales ~ Quantity + Price   n = 100   R^2 = 0.8839   adj R^2 = 0.8815   F p-value = 4.40e-46
+    Intercept       coef =  -121,682.2174   p = 4.14e-22
+    Quantity        coef =    26,430.8402   p = 9.56e-36
+    Price           coef =         4.6106   p = 1.30e-33
+log_total ~ log_qty + log_price   n = 100   R^2 = 1.0000   adj R^2 = 1.0000   F p-value = < 1e-300
+    Intercept       coef =         0.0000   p = 0.7853
+    log_qty         coef =         1.0000   p = < 1e-300
+    log_price       coef =         1.0000   p = < 1e-300
+TotalCharges ~ Tenure + MonthlyCharges   n = 500   R^2 = 0.0019   adj R^2 = -0.0022   F p-value = 0.6304
+    Intercept       coef =     4,482.8713   p = 1.36e-39
+    Tenure          coef =        -0.9000   p = 0.8547
+    MonthlyCharges  coef =        -1.8666   p = 0.3412
+
+----------------------------------------------------------------------------------------
+DATA QUALITY: TotalCharges vs Tenure x MonthlyCharges
+----------------------------------------------------------------------------------------
+Within 10%: 32 of 500 rows (6.4%)
+Ratio recorded/expected: median 1.133, min 0.019, max 208.067
+Correlation recorded vs expected: -0.037
+========================================================================================
